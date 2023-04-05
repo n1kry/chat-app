@@ -12,23 +12,6 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 public class Message {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-//
-//    @Column(nullable = false)
-//    private String text;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "sender_id")
-//    private UserEntity sender;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "receiver_id")
-//    private UserEntity receiver;
-//
-//    @Column(nullable = false)
-//    private LocalDateTime timestamp;
     private String username;
     private String text;
 

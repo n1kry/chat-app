@@ -2,19 +2,12 @@ package com.endava.restraining.service;
 
 import com.endava.restraining.dao.UserDAO;
 import com.endava.restraining.entity.UserEntity;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -32,37 +25,11 @@ public class UserService {
         userDao.save(user);
     }
 
+    public List<String> findAllWithoutPrinciple(Principal principal) {return userDao.findAllByUsernameNot(principal.getName()).stream().map(UserEntity::getUsername).collect(Collectors.toList());}
+
     public UserEntity findByUsername(String username) {
         return userDao.findByUsername(username);
     }
 
-//    @Lazy
-//    @Autowired
-//    public void setPasswordEncoder(final BCryptPasswordEncoder passwordEncoder) {
-//        this.passwordEncoder = passwordEncoder;
-//    }
-//
-//    public void registerUser(UserDTO user) {
-//        final UserEntity userEntity = new UserEntity();
-//        userEntity.setUsername(validateUsername(user.getUsername()));
-//        userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
-//        userDao.save(userEntity);
-//    }
-//
-//    private String validateUsername(final String username) {
-//        if (userDao.existsByUsername(username)) {
-//            throw new RuntimeException("User already registered!");
-//        }
-//        return username;
-//    }
-//
-//    @Override
-//    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-//        UserEntity userEntity = userDao.findByUsername(username);
-//        return new User(
-//                userEntity.getUsername(),
-//                userEntity.getPassword(),
-//                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
-//        );
-//    }
+    public boolean ifExist(String username) {return userDao.existsByUsername(username);}
 }
