@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+</head>
+<body>
+<h1>Chat</h1>
+<div id="messages"></div>
+<form id="message-form">
+    <input type="text" id="message-input">
+    <button type="submit">Send</button>
+</form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(function () {
+        var socket = new SockJS('/ws');
+        var stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+
+            stompClient.subscribe('/topic/messages', function (message) {
+                showMessage(JSON.parse(message.body));
+            });
+        });
+
+        function showMessage(message) {
+            var html = '<p><strong>' + message.username + ': </strong>' + message.text + '</p>';
+            $('#messages').append(html);
+        }
+
+        $('#message-form').submit(function (event) {
+            event.preventDefault();
+
+            var messageInput = $('#message-input');
+            var message = {
+                text: messageInput.val()
+            };
+
+            stompClient.send('/app/chat', {}, JSON.stringify(message));
+            messageInput.val('');
+        });
+    });
+</script>
+</body>
+</html>
