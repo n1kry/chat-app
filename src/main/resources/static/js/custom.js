@@ -20,27 +20,41 @@ function cacheDOM() {
     $chatHistoryList = $chatHistory.find('ul');
 }
 
-function render(message, userName) {
+function render(sender, recipient) {
     scrollToBottom();
-    var templateResponse = Handlebars.compile($("#message-response-template").html());
-    var contextResponse = {
-        response: message,
-        time: getCurrentTime(),
-        userName: userName
-    };
+    let templateResponse = Handlebars.compile($("#message-response-template").html());
+    let template = Handlebars.compile($("#message-template").html());
 
     setTimeout(function () {
-        $chatHistoryList.append(templateResponse(contextResponse));
+        $.get(url + "/getmessages?sender="+sender+"&recipient="+recipient, function (response) {
+            let messages = response;
+            console.log(messages);
+            for (let i = 0; i < messages.length; i++) {
+                if (messages[i].sender === principle) {
+                    $chatHistoryList.append(template({
+                        messageOutput: messages[i].text,
+                        time: getCurrentTime(),
+                        toUserName: messages[i].sender
+                    }));
+                } else {
+                    $chatHistoryList.append(templateResponse({
+                        response: messages[i].text,
+                        time: getCurrentTime(),
+                        userName: messages[i].sender
+                    }));
+                }
+            }
+        });
         scrollToBottom();
-    }.bind(this), 1500);
+    }.bind(this), 200);
 }
 
 function sendMessage(message) {
     sendMsg(principle, message);
     scrollToBottom();
     if (message.trim() !== '') {
-        var template = Handlebars.compile($("#message-template").html());
-        var context = {
+        let template = Handlebars.compile($("#message-template").html());
+        let context = {
             messageOutput: message,
             time: getCurrentTime(),
             toUserName: selectedUser
@@ -51,7 +65,21 @@ function sendMessage(message) {
         $textarea.val('');
     }
 }
+function liveRender(message, userName) {
+    scrollToBottom();
+    // responses
+    let templateResponse = Handlebars.compile($("#message-response-template").html());
+    let contextResponse = {
+        response: message,
+        time: getCurrentTime(),
+        userName: userName
+    };
 
+    setTimeout(function () {
+        $chatHistoryList.append(templateResponse(contextResponse));
+        scrollToBottom();
+    }.bind(this), 200);
+}
 function scrollToBottom() {
     $chatHistory.scrollTop($chatHistory[0].scrollHeight);
 }

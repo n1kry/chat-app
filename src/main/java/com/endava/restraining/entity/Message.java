@@ -2,30 +2,35 @@ package com.endava.restraining.entity;
 
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-//@Entity
+@Entity
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Message {
-    private String username;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+    @Column
+    private String sender;
+    @Column
+    private String recipient;
+    @Column
     private String text;
-
-    public Message() {}
-
-    public Message(String username, String text) {
-        this.username = username;
-        this.text = text;
-    }
 
     @Override
     public String toString() {
         return "Message{" +
-                "username='" + username + '\'' +
+                "sender='" + sender + '\'' +
+                ", recipient='" + recipient + '\'' +
                 ", text='" + text + '\'' +
                 '}';
     }

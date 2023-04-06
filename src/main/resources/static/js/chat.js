@@ -13,11 +13,11 @@ function connectToChat(userName) {
         console.log("connected to: " + frame);
         stompClient.subscribe("/topic/messages/" + userName, function (response) {
             let data = JSON.parse(response.body);
-            if (selectedUser === data.username) {
-                render(data.text, data.username);
+            if (selectedUser === data.sender) {
+                liveRender(data.text, data.sender);
             } else {
-                newMessages.set(data.username, data.text);
-                $('#userNameAppender_' + data.username).append('<span id="newMessage_' + data.username + '" style="color: red">+1</span>');
+                newMessages.set(data.sender, data.text);
+                $('#userNameAppender_' + data.sender).append('<span id="newMessage_' + data.sender + '" style="color: red">+1</span>');
             }
         });
     });
@@ -25,7 +25,8 @@ function connectToChat(userName) {
 
 function sendMsg(from, text) {
     stompClient.send("/app/chat/" + selectedUser, {}, JSON.stringify({
-        username: from,
+        sender: from,
+        recipient: selectedUser,
         text: text
     }));
 }
@@ -47,10 +48,11 @@ function selectUser(userName) {
     if (isNew) {
         let element = document.getElementById("newMessage_" + userName);
         element.parentNode.removeChild(element);
-        render(newMessages.get(userName), userName);
     }
     $('#selectedUserId').html('');
     $('#selectedUserId').append('Chat with ' + userName);
+    $('#chat-history').html('');
+    render(principle, selectedUser);
 }
 
 function fetchAll() {
