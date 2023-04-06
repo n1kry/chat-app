@@ -22,7 +22,6 @@ function cacheDOM() {
 
 function render(message, userName) {
     scrollToBottom();
-    // responses
     var templateResponse = Handlebars.compile($("#message-response-template").html());
     var contextResponse = {
         response: message,
@@ -37,15 +36,14 @@ function render(message, userName) {
 }
 
 function sendMessage(message) {
-    let username = $('#userName').val();
-    console.log(username)
-    sendMsg(username, message);
+    sendMsg(principle, message);
     scrollToBottom();
     if (message.trim() !== '') {
         var template = Handlebars.compile($("#message-template").html());
         var context = {
             messageOutput: message,
-            time: getCurrentTime()
+            time: getCurrentTime(),
+            toUserName: selectedUser
         };
 
         $chatHistoryList.append(template(context));
@@ -74,4 +72,3 @@ function addMessageEnter(event) {
 }
 
 init();
-

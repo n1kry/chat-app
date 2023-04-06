@@ -25,6 +25,7 @@ public class UserService {
         userDao.save(user);
     }
 
+//    public List<String> findAllWithoutPrinciple(Principal principal) {return userDao.findAll().stream().map(UserEntity::getUsername).collect(Collectors.toList());}
     public List<String> findAllWithoutPrinciple(Principal principal) {return userDao.findAllByUsernameNot(principal.getName()).stream().map(UserEntity::getUsername).collect(Collectors.toList());}
 
     public UserEntity findByUsername(String username) {

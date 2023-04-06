@@ -2,20 +2,22 @@ const url = 'http://localhost:8080';
 let stompClient;
 let selectedUser;
 let newMessages = new Map();
+let principle;
+registration();
+let socket = new SockJS(url + '/chat');
 
 function connectToChat(userName) {
     console.log("connecting to chat...")
-    let socket = new SockJS(url + '/chat');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log("connected to: " + frame);
         stompClient.subscribe("/topic/messages/" + userName, function (response) {
             let data = JSON.parse(response.body);
-            if (selectedUser === data.fromLogin) {
-                render(data.message, data.fromLogin);
+            if (selectedUser === data.username) {
+                render(data.text, data.username);
             } else {
-                newMessages.set(data.fromLogin, data.message);
-                $('#userNameAppender_' + data.fromLogin).append('<span id="newMessage_' + data.fromLogin + '" style="color: red">+1</span>');
+                newMessages.set(data.username, data.text);
+                $('#userNameAppender_' + data.username).append('<span id="newMessage_' + data.username + '" style="color: red">+1</span>');
             }
         });
     });
@@ -23,20 +25,19 @@ function connectToChat(userName) {
 
 function sendMsg(from, text) {
     stompClient.send("/app/chat/" + selectedUser, {}, JSON.stringify({
-        fromLogin: from,
-        message: text
+        username: from,
+        text: text
     }));
 }
 
 function registration() {
-    let userName = document.getElementById("userName").value;
-    $.get(url + "/registration/" + userName, function (response) {
-        connectToChat(userName);
-    }).fail(function (error) {
-        if (error.status === 400) {
-            alert("Login is already busy!")
-        }
-    })
+    $.get(url + "/getprincipal", function (response) {
+        principle = response;
+        $('#userName').text('Your name:\n' + principle);
+        console.log(principle);
+        connectToChat(principle);
+        fetchAll();
+    });
 }
 
 function selectUser(userName) {
@@ -53,13 +54,11 @@ function selectUser(userName) {
 }
 
 function fetchAll() {
-    console.log('fsdfgsdgsdg');
     $.get(url + "/fetchallusers", function (response) {
         let users = response;
         let usersTemplateHTML = "";
         for (let i = 0; i < users.length; i++) {
-            usersTemplateHTML = usersTemplateHTML + '<a href="#" onclick="selectUser(\'' + users[i] + '\')"><li class="clearfix">\n' +
-                '                <img src="https://rtfm.co.ua/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" width="55px" height="55px" alt="avatar" />\n' +
+            usersTemplateHTML = usersTemplateHTML + '<a href="#" onclick="selectUser(\'' + users[i] + '\')"><li class="list-group-item list-group-item-action mb-2 clearfix" data-toggle="list">\n' +
                 '                <div class="about">\n' +
                 '                    <div id="userNameAppender_' + users[i] + '" class="name">' + users[i] + '</div>\n' +
                 '                    <div class="status">\n' +

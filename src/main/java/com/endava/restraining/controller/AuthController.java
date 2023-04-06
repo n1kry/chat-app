@@ -5,7 +5,10 @@ import com.endava.restraining.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 public class AuthController {
@@ -16,14 +19,17 @@ public class AuthController {
     }
 
     @GetMapping("/registration")
-    public String registerForm(Model model) {
-        model.addAttribute("user", new UserEntity());
+    public String registerForm(Model model,UserEntity userEntity) {
+        model.addAttribute("user", userEntity);
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String registerSubmit(@ModelAttribute UserEntity user) {
-        userService.addUser(user);
+    public String registerSubmit(@Valid UserEntity userEntity, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "registration";
+        }
+        userService.addUser(userEntity);
         return "redirect:/login";
     }
 
