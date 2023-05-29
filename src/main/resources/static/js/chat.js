@@ -1,7 +1,6 @@
 const url = 'http://localhost:8080';
 let stompClient;
 let selectedUser;
-let newMessages = new Map();
 let principle;
 registration();
 let socket = new SockJS(url + '/chat');
@@ -16,7 +15,6 @@ function connectToChat(userName) {
             if (selectedUser === data.sender) {
                 liveRender(data.text, data.sender);
             } else {
-                newMessages.set(data.sender, data.text);
                 $('#userNameAppender_' + data.sender).append('<span id="newMessage_' + data.sender + '" style="color: red">+1</span>');
             }
         });
@@ -34,7 +32,7 @@ function sendMsg(from, text) {
 function registration() {
     $.get(url + "/getprincipal", function (response) {
         principle = response;
-        $('#userName').text('Your name:\n' + principle);
+        $('#userName').text(principle);
         console.log(principle);
         connectToChat(principle);
         fetchAll();
@@ -52,6 +50,7 @@ function selectUser(userName) {
     $('#selectedUserId').html('');
     $('#selectedUserId').append('Chat with ' + userName);
     $('#chat-history').html('');
+
     render(principle, selectedUser);
 }
 
@@ -70,5 +69,13 @@ function fetchAll() {
                 '            </li></a>';
         }
         $('#usersList').html(usersTemplateHTML);
+    }).done(function () {
+        $('#usersList').off('click', 'li').on('click', 'li', function (e) {
+            const current = document.getElementsByClassName("selected");
+            if (current.length > 0) {
+                current[0].classList.remove("selected");
+            }
+            this.classList.add("selected");
+        });
     });
 }

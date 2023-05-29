@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+/*@import url(https://fonts.googleapis.com/css?family=Lato:400,700);*/
 
 *, *:before, *:after {
     box-sizing: border-box;
@@ -43,12 +43,28 @@ body {
 }
 
 .people-list ul {
-    padding: 20px;
-    height: 770px;
+    padding: 0;
+    /*height: 770px;*/
 }
 
 .people-list ul li {
-    padding-bottom: 20px;
+    padding: 1px 1px 20px;
+    background-color: #444753;
+}
+
+.people-list ul li.selected {
+    background-color: #525986;
+    box-shadow: inset 0 -2px 0 0 #6078b9;
+    border-radius: 5px;
+}
+
+.people-list ul li:hover {
+    color: #a2c3ff;
+    background-color: #70768a;
+}
+
+a {
+    color: white;
 }
 
 .people-list img {
@@ -120,37 +136,39 @@ ul {
 }
 
 .chat .chat-history .message-data {
-    margin-bottom: 15px;
+    font-weight: bold;
+    margin-bottom: 3px;
 }
 
 .chat .chat-history .message-data-time {
+    font-size: 10px;
     color: #a8aab1;
     padding-left: 6px;
 }
 
 .chat .chat-history .message {
     color: white;
-    padding: 18px 20px;
+    padding: 8px 16px;
     line-height: 26px;
-    font-size: 16px;
+    font-size: 14px;
     border-radius: 7px;
-    margin-bottom: 30px;
+    margin-bottom: 3px;
     width: 90%;
     position: relative;
 }
 
 .chat .chat-history .message:after {
-    bottom: 100%;
-    left: 7%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
+    top: 0;
+    left: 2.5%;
+    transform: translateX(-50%);
+    content: "";
     width: 0;
+    height: 0;
     position: absolute;
     pointer-events: none;
-    border-bottom-color: #86BB71;
-    border-width: 10px;
-    margin-left: -10px;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid #86BB71;
 }
 
 .chat .chat-history .my-message {
@@ -162,8 +180,8 @@ ul {
 }
 
 .chat .chat-history .other-message:after {
-    border-bottom-color: #94C2ED;
-    left: 93%;
+    border-top-color: #94C2ED;
+    left: 97.5%;
 }
 
 .chat .chat-message {
@@ -237,4 +255,34 @@ ul {
     content: " ";
     clear: both;
     height: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #444753;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-inline: 10px;
+}
+
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.username {
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 18px;
 }

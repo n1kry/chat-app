@@ -3,6 +3,7 @@ package com.endava.restraining.controller;
 import com.endava.restraining.entity.Message;
 import com.endava.restraining.service.MessageService;
 import com.endava.restraining.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -16,13 +17,14 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 public class MessageController {
-    @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private MessageService messageService;
+
+    private final SimpMessagingTemplate simpMessagingTemplate;
+
+    private final UserService userService;
+
+    private final MessageService messageService;
 
     @MessageMapping("/chat/{to}")
     public void sendMessage(@DestinationVariable String to, Message message) {

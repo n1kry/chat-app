@@ -2,6 +2,7 @@ package com.endava.restraining.controller;
 
 import com.endava.restraining.entity.UserEntity;
 import com.endava.restraining.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,12 +14,10 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@AllArgsConstructor
 public class UsersController {
+
     private final UserService userService;
-    @Autowired
-    public UsersController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/fetchallusers")
     public List<String> fetchAll(Model model, Principal principal) {
