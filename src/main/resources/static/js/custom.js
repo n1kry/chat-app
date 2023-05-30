@@ -21,12 +21,11 @@ function cacheDOM() {
 }
 
 function render(sender, recipient) {
-    scrollToBottom();
     let templateResponse = Handlebars.compile($("#message-response-template").html());
     let template = Handlebars.compile($("#message-template").html());
 
     setTimeout(function () {
-        $.get(url + "/getmessages?sender="+sender+"&recipient="+recipient, function (response) {
+        $.get(url + "/getmessages?sender=" + sender + "&recipient=" + recipient, function (response) {
             let messages = response;
             console.log(messages);
             for (let i = 0; i < messages.length; i++) {
@@ -44,8 +43,8 @@ function render(sender, recipient) {
                     }));
                 }
             }
+            scrollToBottom();
         });
-        scrollToBottom();
     }.bind(this), 200);
 }
 
@@ -65,6 +64,7 @@ function sendMessage(message) {
         $textarea.val('');
     }
 }
+
 function liveRender(message, userName) {
     scrollToBottom();
     // responses
@@ -80,8 +80,10 @@ function liveRender(message, userName) {
         scrollToBottom();
     }.bind(this), 200);
 }
+
 function scrollToBottom() {
     $chatHistory.scrollTop($chatHistory[0].scrollHeight);
+    console.log($chatHistory.scrollTop($chatHistory[0].scrollHeight))
 }
 
 function getCurrentTime() {

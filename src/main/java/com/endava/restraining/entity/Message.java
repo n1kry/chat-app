@@ -1,6 +1,7 @@
 package com.endava.restraining.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.Date;
@@ -28,6 +29,8 @@ public class Message {
     private String recipient;
 
     @ToString.Include
+    @Column(columnDefinition = "text")
+    @NotBlank
     private String text;
 
 //    @ToString.Include
