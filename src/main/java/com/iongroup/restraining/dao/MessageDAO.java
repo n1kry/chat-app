@@ -1,11 +1,11 @@
-package com.endava.restraining.dao;
+package com.iongroup.restraining.dao;
 
-import com.endava.restraining.entity.Message;
-import com.endava.restraining.entity.UserEntity;
+import com.iongroup.restraining.entity.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface MessageDAO extends JpaRepository<Message, Long> {
     List<Message> findAllBySenderAndRecipientOrSenderAndRecipient(String sender, String recipient, String recipientReverse, String senderReverse);
 }

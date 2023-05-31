@@ -1,10 +1,8 @@
-package com.endava.restraining.entity;
+package com.iongroup.restraining.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-
-import java.util.Date;
 
 
 @Entity

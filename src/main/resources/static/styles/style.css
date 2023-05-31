@@ -289,15 +289,16 @@ body {
 
 .header {
     background-color: #444753;
-    padding: 10px;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .user-profile {
+    padding: 10px;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    padding-inline: 10px;
+    padding-inline: 30px;
 }
 
 .user-icon {
@@ -307,7 +308,39 @@ body {
 }
 
 .username {
-    margin-left: 10px;
+    margin-inline: 10px;
     font-weight: bold;
     font-size: 18px;
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    background-color: #444753;
+    border: 1px solid #ccc;
+    padding: 2px;
+    right: 0;
+    border-radius: 5px;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu ul li {
+    padding: 5px;
+    margin: 6px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.menu ul li:hover {
+    color: #a2c3ff;
+    background-color: #70768a;
+}
+
+.menu li.log-out {
+    border: 1px solid;
 }

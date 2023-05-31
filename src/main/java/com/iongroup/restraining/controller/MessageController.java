@@ -1,19 +1,16 @@
-package com.endava.restraining.controller;
+package com.iongroup.restraining.controller;
 
-import com.endava.restraining.entity.Message;
-import com.endava.restraining.service.MessageService;
-import com.endava.restraining.service.UserService;
+import com.iongroup.restraining.entity.Message;
+import com.iongroup.restraining.service.MessageService;
+import com.iongroup.restraining.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController

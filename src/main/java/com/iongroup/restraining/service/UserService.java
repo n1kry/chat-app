@@ -1,7 +1,7 @@
-package com.endava.restraining.service;
+package com.iongroup.restraining.service;
 
-import com.endava.restraining.dao.UserDAO;
-import com.endava.restraining.entity.UserEntity;
+import com.iongroup.restraining.dao.UserDAO;
+import com.iongroup.restraining.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class UserService {
     }
 
     public List<String> findAllWithoutPrinciple(Principal principal) {
-        return userDao.findAllByUsernameNot(principal.getName()).stream().map(UserEntity::getUsername).collect(Collectors.toList());
+        return userDao.findAllByUsernameNot(principal.getName()).stream().map(UserEntity::getUsername).toList();
     }
 
     public UserEntity findByUsername(String username) {

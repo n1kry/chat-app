@@ -1,4 +1,4 @@
-package com.endava.restraining;
+package com.iongroup.restraining;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

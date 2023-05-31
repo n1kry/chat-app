@@ -1,7 +1,7 @@
-package com.endava.restraining.config;
+package com.iongroup.restraining.config;
 
-import com.endava.restraining.dao.UserDAO;
-import com.endava.restraining.entity.UserEntity;
+import com.iongroup.restraining.dao.UserDAO;
+import com.iongroup.restraining.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +47,7 @@ public class SecurityConfig {
                 )
                 .logout((logout) ->
                         logout
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/chat/logout"))
                                 .logoutSuccessUrl("/login").permitAll()
                 );
         return http.build();

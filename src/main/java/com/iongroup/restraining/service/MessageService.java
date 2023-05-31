@@ -1,7 +1,7 @@
-package com.endava.restraining.service;
+package com.iongroup.restraining.service;
 
-import com.endava.restraining.dao.MessageDAO;
-import com.endava.restraining.entity.Message;
+import com.iongroup.restraining.dao.MessageDAO;
+import com.iongroup.restraining.entity.Message;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
-package com.endava.restraining.dao;
+package com.iongroup.restraining.dao;
 
-import com.endava.restraining.entity.UserEntity;
+import com.iongroup.restraining.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

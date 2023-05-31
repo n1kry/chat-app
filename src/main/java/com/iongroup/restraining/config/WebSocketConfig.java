@@ -1,4 +1,4 @@
-package com.endava.restraining.config;
+package com.iongroup.restraining.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

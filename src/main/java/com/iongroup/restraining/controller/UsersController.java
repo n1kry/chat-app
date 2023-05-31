@@ -1,9 +1,7 @@
-package com.endava.restraining.controller;
+package com.iongroup.restraining.controller;
 
-import com.endava.restraining.entity.UserEntity;
-import com.endava.restraining.service.UserService;
+import com.iongroup.restraining.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

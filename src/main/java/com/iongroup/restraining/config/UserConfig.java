@@ -1,6 +1,9 @@
-package com.endava.restraining.config;
+package com.iongroup.restraining.config;
 
-import com.endava.restraining.entity.UserEntity;
+import com.iongroup.restraining.entity.MessageEntity;
+import com.iongroup.restraining.entity.RoomEntity;
+import com.iongroup.restraining.entity.UserEntity;
+import com.iongroup.restraining.service.RoomService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -35,5 +38,33 @@ public class UserConfig {
         user.setPassword("1");
 
         return user;
+    }
+
+    @Bean
+    public RoomEntity room1() {
+        RoomEntity room = new RoomEntity();
+
+        return room;
+    }
+
+    @Bean
+    public RoomEntity room2() {
+        RoomEntity room = new RoomEntity();
+
+        return room;
+    }
+
+    @Bean
+    public MessageEntity message1() {
+        MessageEntity message = new MessageEntity();
+
+        return message;
+    }
+
+    @Bean
+    public MessageEntity message2() {
+        MessageEntity message = new MessageEntity();
+
+        return message;
     }
 }
