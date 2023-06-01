@@ -61,5 +61,10 @@ public class DatabaseInitializer implements ApplicationListener<ContextRefreshed
         message2.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
 
         messageEntService.save(message2);
+
+//        System.out.println(messageEntService.findAllMessagesInChatRoom(room1.getId(), user1));
+//        System.out.println(messageEntService.findMessagesByUsers(user1.getUsername(),user3.getUsername()));
+//        System.out.println(service.findAllUsersThatPrincipleKnows(user1.getUsername()));
+//        System.out.println(roomService.findByUsersUsernames("n1kry2","n1kry"));
     }
 }

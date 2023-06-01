@@ -2,6 +2,7 @@ package com.iongroup.restraining.service;
 
 import com.iongroup.restraining.dao.UserDAO;
 import com.iongroup.restraining.entity.UserEntity;
+import com.iongroup.restraining.entity.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,11 @@ public class UserService {
 
     public List<String> findAllWithoutPrinciple(Principal principal) {
         return userDao.findAllByUsernameNot(principal.getName()).stream().map(UserEntity::getUsername).toList();
+    }
+
+    public List<UserDTO> findAllUsersThatPrincipleKnows(String username) {
+        List<Long> ids = userDao.findConversationParticipantIdsByUsername(username);
+        return userDao.findAllById(ids).stream().map(UserDTO::getUserDtoFromUser).toList();
     }
 
     public UserEntity findByUsername(String username) {

@@ -3,10 +3,12 @@ package com.iongroup.restraining.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "rooms")
 public class RoomEntity {
     @Id

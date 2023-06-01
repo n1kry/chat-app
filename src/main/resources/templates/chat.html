@@ -17,6 +17,10 @@
 </head>
 <body>
 <div class="header">
+    <div class="search-wrapper">
+        <input type="text" class="search-input" placeholder="Search user...">
+        <i class="fa-solid fa-search search-icon"></i>
+    </div>
     <div class="user-profile" id="object">
         <img src="../static/img/user-icon.png" alt="User Icon" class="user-icon">
         <span class="username" id="userName">n1kry</span>
@@ -24,7 +28,8 @@
             <ul>
                 <li>Menu item 1</li>
                 <li>Menu item 2</li>
-                <li class="log-out"><i class="fa-solid fa-door-open" style="width: 10px; margin-right: 10px"></i>Log Out</li>
+                <li class="log-out"><i class="fa-solid fa-door-open" style="width: 10px; margin-right: 10px"></i>Log Out
+                </li>
             </ul>
         </div>
     </div>
@@ -34,25 +39,29 @@
         <div class="col-md-4">
             <div class="people-list">
                 <div class="search">
-                    <button class="btn btn-info" id="refreshBtn" >Refresh</button>
+                    <button class="btn btn-info" id="refreshBtn" onclick="fetchAll()"><i class="fa-solid fa-arrow-rotate-right"></i></button>
                 </div>
                 <ul class="list-group" id="usersList">
-                    <a href="#" onclick="selectUser('n1kry')"><li class="list-group-item list-group-item-action mb-2 clearfix" data-toggle="list">
-                        <div class="about">
-                            <div id="userNameAppender_n1kry" class="name">n1kry</div>
-                            <div class="status">
-                                <i class="fa fa-circle offline"></i>
+                    <a href="#" onclick="selectUser('n1kry')">
+                        <li class="list-group-item list-group-item-action mb-2 clearfix" data-toggle="list">
+                            <div class="about">
+                                <div id="userNameAppender_n1kry" class="name">n1kry</div>
+                                <div class="status">
+                                    <i class="fa fa-circle offline"></i>
+                                </div>
                             </div>
-                        </div>
-                    </li></a>
-                    <a href="#" onclick="selectUser('crme029')"><li class="list-group-item list-group-item-action mb-2 clearfix" data-toggle="list">
-                        <div class="about">
-                            <div id="userNameAppender_crme029" class="name">crme029</div>
-                            <div class="status">
-                                <i class="fa fa-circle offline"></i>
+                        </li>
+                    </a>
+                    <a href="#" onclick="selectUser('crme029')">
+                        <li class="list-group-item list-group-item-action mb-2 clearfix" data-toggle="list">
+                            <div class="about">
+                                <div id="userNameAppender_crme029" class="name">crme029</div>
+                                <div class="status">
+                                    <i class="fa fa-circle offline"></i>
+                                </div>
                             </div>
-                        </div>
-                    </li></a>
+                        </li>
+                    </a>
                 </ul>
             </div>
         </div>
@@ -94,7 +103,8 @@
                     </ul>
                 </div> <!-- end chat-history -->
                 <div class="chat-message clearfix">
-                    <textarea class="form-control" id="message-to-send" name="message-to-send" placeholder="Type your message" rows="3"></textarea>
+                    <textarea class="form-control" id="message-to-send" name="message-to-send"
+                              placeholder="Type your message" rows="3"></textarea>
                     <button id="sendBtn" class="btn btn-primary">Send</button>
                 </div> <!-- end chat-message -->
             </div> <!-- end chat -->
@@ -129,8 +139,8 @@
 <script type="text/javascript" th:src="@{/js/custom.js}"></script>
 <script type="text/javascript" th:src="@{/js/chat.js}"></script>
 <script>
-    $(document).ready(function() {
-        $("#object").mouseenter(function() {
+    $(document).ready(function () {
+        $("#object").mouseenter(function () {
             var menu = $("#menu");
             menu.show();
             var objectOffset = $(this).offset();
@@ -138,13 +148,19 @@
                 top: objectOffset.top + $(this).outerHeight() + "px",
                 left: objectOffset.left + "px"
             });
-        }).mouseleave(function() {
+        }).mouseleave(function () {
             $("#menu").hide();
         });
     });
-    $(document).ready(function() {
-        $(".log-out").click(function() {
+    $(document).ready(function () {
+        $(".log-out").click(function () {
             window.location.href = "chat/logout";
+        });
+        $(".search-icon").click(function () {
+            // Действия при клике на иконку поиска
+            let searchText = $(".search-input").val();
+            // Дополнительные действия с введенным текстом поиска
+            console.log("Search text: " + searchText);
         });
     });
 </script>

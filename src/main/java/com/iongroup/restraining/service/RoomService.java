@@ -2,6 +2,7 @@ package com.iongroup.restraining.service;
 
 import com.iongroup.restraining.dao.RoomDAO;
 import com.iongroup.restraining.entity.RoomEntity;
+import com.iongroup.restraining.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +26,9 @@ public class RoomService {
         }
 
         return roomDAO.save(room);
+    }
+
+    public RoomEntity findByUsersUsernames(String user1, String user2) {
+        return roomDAO.findByUser1UsernameAndUser2UsernameOrUser2UsernameAndUser1Username(user1, user2);
     }
 }
