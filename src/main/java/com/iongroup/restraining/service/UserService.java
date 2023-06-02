@@ -7,9 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -24,11 +22,11 @@ public class UserService {
         userDao.save(user);
     }
 
-    public List<String> findAllWithoutPrinciple(Principal principal) {
-        return userDao.findAllByUsernameNot(principal.getName()).stream().map(UserEntity::getUsername).toList();
+    public List<UserDTO> findAllWithoutPrincipal(String username) {
+        return userDao.findAllByUsernameNot(username).stream().map(UserDTO::getUserDtoFromUser).toList();
     }
 
-    public List<UserDTO> findAllUsersThatPrincipleKnows(String username) {
+    public List<UserDTO> findAllUsersThatPrincipalKnows(String username) {
         List<Long> ids = userDao.findConversationParticipantIdsByUsername(username);
         return userDao.findAllById(ids).stream().map(UserDTO::getUserDtoFromUser).toList();
     }
@@ -37,7 +35,21 @@ public class UserService {
         return userDao.findByUsername(username);
     }
 
-    public boolean ifExist(String username) {
+    public UserEntity findById(Long id) {
+        return userDao.findById(id).orElse(null);
+    }
+
+    public List<UserDTO> findUsersWithoutRoomByUser(String name, String searchTerm) {
+        UserEntity user = userDao.findByUsername(name);
+
+        return userDao.findUsersWithoutRoomByUser(user, user.getId(), searchTerm).stream().map(UserDTO::getUserDtoFromUser).toList();
+    }
+
+    public boolean ifExistByUserName(String username) {
         return userDao.existsByUsername(username);
+    }
+
+    public boolean ifExistById(Long id) {
+        return userDao.existsById(id);
     }
 }

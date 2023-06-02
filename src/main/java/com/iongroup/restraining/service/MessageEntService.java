@@ -4,7 +4,6 @@ import com.iongroup.restraining.dao.MessageEntDao;
 import com.iongroup.restraining.entity.MessageEntity;
 import com.iongroup.restraining.entity.UserEntity;
 import lombok.AllArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +22,11 @@ public class MessageEntService {
         return messageEntDao.findMessagesByRoomAndUser(roomId, user);
     }
 
-    public List<MessageEntity> findMessagesByUsers(String currentUser, String recipient) {
-        return messageEntDao.findMessagesByUsers(currentUser, recipient);
+    public List<MessageEntity> findMessagesByUsersNames(String currentUser, String recipient) {
+        return messageEntDao.findMessagesByUsersNames(currentUser, recipient);
+    }
+
+    public List<MessageEntity> findMessagesByUsersId(Long currentUser, Long recipient) {
+        return messageEntDao.findMessagesByUsersId(currentUser, recipient);
     }
 }

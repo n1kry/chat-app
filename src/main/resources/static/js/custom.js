@@ -24,13 +24,15 @@ function render(sender, recipient) {
     let templateResponse = Handlebars.compile($("#message-response-template").html()); // Компиляция шаблона для отображения полученных сообщений
     let template = Handlebars.compile($("#message-template").html()); // Компиляция шаблона для отображения отправленных сообщений
 
+    console.log(sender, recipient)
+
     setTimeout(function () {
-        $.get(url + "/getmessages?sender=" + sender + "&recipient=" + recipient, function (response) {
+        $.get(url + "/getmessages?sender=" + sender.id + "&recipient=" + recipient.id, function (response) {
             let messages = response; // Получение списка сообщений
             console.log(messages);
             console.log(messages[0].timestamp)
             for (let i = 0; i < messages.length; i++) {
-                if (messages[i].user.username === principle) {
+                if (messages[i].user.username === principle.username) {
                     $chatHistoryList.append(template({
                         messageOutput: messages[i].text,
                         time: getTime(messages[i].timestamp),
@@ -39,7 +41,7 @@ function render(sender, recipient) {
                     $chatHistoryList.append(templateResponse({
                         response: messages[i].text,
                         time: getTime(messages[i].timestamp),
-                        userName: selectedUser
+                        userName: selectedUser.username
                     })); // Отображение полученных сообщений в чате
                 }
             }

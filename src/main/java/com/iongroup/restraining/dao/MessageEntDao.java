@@ -20,5 +20,12 @@ public interface MessageEntDao extends JpaRepository<MessageEntity, Integer> {
             "(r.user1.username = :recipient AND r.user2.username = :currentUser)) " +
             "AND (m.user.username = :currentUser OR m.user.username = :recipient) " +
             "ORDER BY m.timestamp ASC")
-    List<MessageEntity> findMessagesByUsers(@Param("currentUser") String currentUser, @Param("recipient") String recipient);
+    List<MessageEntity> findMessagesByUsersNames(@Param("currentUser") String currentUser, @Param("recipient") String recipient);
+
+    @Query("SELECT m FROM MessageEntity m JOIN m.room r " +
+            "WHERE ((r.user1.id = :currentUser AND r.user2.id = :recipient) OR " +
+            "(r.user1.id = :recipient AND r.user2.id = :currentUser)) " +
+            "AND (m.user.id = :currentUser OR m.user.id = :recipient) " +
+            "ORDER BY m.timestamp ASC")
+    List<MessageEntity> findMessagesByUsersId(@Param("currentUser") Long currentUser, @Param("recipient") Long recipient);
 }

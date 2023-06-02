@@ -18,8 +18,19 @@
 <body>
 <div class="header">
     <div class="search-wrapper">
-        <input type="text" class="search-input" placeholder="Search user...">
-        <i class="fa-solid fa-search search-icon"></i>
+        <input type="text" id="userSearchInput" class="search-input" placeholder="Search user...">
+        <div id="search-list-div" class="search-list">
+            <ul id="search-list">
+                <li>Menu item 1</li>
+                <li onclick="$('#search-list-div').hide();">Menu item 2</li>
+                <li>Menu item 2</li>
+                <li>Menu item 2</li>
+                <li>Menu item 2</li>
+                <li>Menu item 2</li>
+                <li>Menu item 2</li>
+                <li>Menu item 2</li>
+            </ul>
+        </div>
     </div>
     <div class="user-profile" id="object">
         <img src="../static/img/user-icon.png" alt="User Icon" class="user-icon">
@@ -39,7 +50,8 @@
         <div class="col-md-4">
             <div class="people-list">
                 <div class="search">
-                    <button class="btn btn-info" id="refreshBtn" onclick="fetchAll()"><i class="fa-solid fa-arrow-rotate-right"></i></button>
+                    <button class="btn btn-info" id="refreshBtn" onclick="fetchKnown()"><i
+                            class="fa-solid fa-arrow-rotate-right"></i></button>
                 </div>
                 <ul class="list-group" id="usersList">
                     <a href="#" onclick="selectUser('n1kry')">
@@ -138,6 +150,7 @@
 
 <script type="text/javascript" th:src="@{/js/custom.js}"></script>
 <script type="text/javascript" th:src="@{/js/chat.js}"></script>
+<script type="text/javascript" th:src="@{/js/styleHelper.js}"></script>
 <script>
     $(document).ready(function () {
         $("#object").mouseenter(function () {
@@ -152,15 +165,56 @@
             $("#menu").hide();
         });
     });
+
+    let list;
+
     $(document).ready(function () {
         $(".log-out").click(function () {
             window.location.href = "chat/logout";
         });
-        $(".search-icon").click(function () {
-            // Действия при клике на иконку поиска
-            let searchText = $(".search-input").val();
-            // Дополнительные действия с введенным текстом поиска
-            console.log("Search text: " + searchText);
+
+        $("#userSearchInput").focusin(function () {
+            let menu = $("#search-list-div");
+            menu.show();
+
+            let objectOffset = $(this).offset();
+            menu.css({
+                top: objectOffset.top + $(this).outerHeight() + "px",
+            });
+        })
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('#userSearchInput, #search-list-div').length) {
+                $('#search-list-div').hide();
+            }
+        });
+
+        $('#search-list').on('click', 'li', function () {
+            $('#search-list-div').hide();
+        });
+
+        $('#userSearchInput').on('input', function () {
+
+            const searchTerm = $(this).val(); // Получение текста из поля поиска
+
+            if (searchTerm.length > 2) {
+                $.get(url + "/fetchallusers?searchTerm=" + searchTerm, function (response) {
+                    list = response;
+                    console.log('List', list)
+                }).done(function () {
+                    $('#search-list-div').show();
+
+                    let usersListTemplate = '';
+                    console.log('Filtered', list)
+
+                    for (let i = 0; i < list.length; i++) {
+                        usersListTemplate = usersListTemplate + '<a href="#" onclick="writeToUser(\'' + list[i].id + '\')"><li data-toggle="list">' + list[i].username + '</li></a>';
+                    }
+
+                    $('#search-list').html(usersListTemplate);
+                });
+            } else {
+                $('#search-list-div').hide();
+            }
         });
     });
 </script>

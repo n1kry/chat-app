@@ -41,6 +41,26 @@ public class UserConfig {
     }
 
     @Bean
+    public UserEntity friend1() {
+        UserEntity user = new UserEntity();
+        user.setUsername("friend1");
+        user.setEmail("4@mail.com");
+        user.setPassword("1");
+
+        return user;
+    }
+
+    @Bean
+    public UserEntity friend2() {
+        UserEntity user = new UserEntity();
+        user.setUsername("friend2");
+        user.setEmail("5@mail.com");
+        user.setPassword("1");
+
+        return user;
+    }
+
+    @Bean
     public RoomEntity room1() {
         RoomEntity room = new RoomEntity();
 

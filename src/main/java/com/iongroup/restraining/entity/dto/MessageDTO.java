@@ -13,9 +13,9 @@ import java.sql.Timestamp;
 @Setter
 @Getter
 public class MessageDTO {
-    private String sender;
+    private Long senderId;
 
-    private String recipient;
+    private Long recipientId;
 
     private String text;
 

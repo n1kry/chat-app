@@ -21,6 +21,8 @@ public class DatabaseInitializer implements ApplicationListener<ContextRefreshed
     private final UserEntity user1;
     private final UserEntity user2;
     private final UserEntity user3;
+    private final UserEntity friend1;
+    private final UserEntity friend2;
 
     private final RoomEntity room1;
     private final RoomEntity room2;
@@ -37,16 +39,18 @@ public class DatabaseInitializer implements ApplicationListener<ContextRefreshed
         service.addUser(user1);
         service.addUser(user2);
         service.addUser(user3);
+        service.addUser(friend1);
+        service.addUser(friend2);
 
         room1.setUser1(user1);
         room1.setUser2(user2);
 
-        roomService.insert(room1);
+        roomService.save(room1);
 
         room2.setUser1(user1);
         room2.setUser2(user3);
 
-        roomService.insert(room2);
+        roomService.save(room2);
 
         message1.setRoom(room1);
         message1.setUser(user1);
@@ -64,7 +68,7 @@ public class DatabaseInitializer implements ApplicationListener<ContextRefreshed
 
 //        System.out.println(messageEntService.findAllMessagesInChatRoom(room1.getId(), user1));
 //        System.out.println(messageEntService.findMessagesByUsers(user1.getUsername(),user3.getUsername()));
-//        System.out.println(service.findAllUsersThatPrincipleKnows(user1.getUsername()));
+//        System.out.println(service.findAllWithoutPrinciple(user2.getUsername()));
 //        System.out.println(roomService.findByUsersUsernames("n1kry2","n1kry"));
     }
 }
