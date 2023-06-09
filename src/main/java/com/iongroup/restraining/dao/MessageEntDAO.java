@@ -7,10 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
-public interface MessageEntDao extends JpaRepository<MessageEntity, Integer> {
+public interface MessageEntDAO extends JpaRepository<MessageEntity, Integer> {
     @Query("SELECT m FROM MessageEntity m WHERE m.room.id = :roomId " +
             "AND (m.user = :user OR m.room.user1 = :user OR m.room.user2 = :user)")
     List<MessageEntity> findMessagesByRoomAndUser(@Param("roomId") Long roomId, @Param("user") UserEntity user);
@@ -28,4 +29,8 @@ public interface MessageEntDao extends JpaRepository<MessageEntity, Integer> {
             "AND (m.user.id = :currentUser OR m.user.id = :recipient) " +
             "ORDER BY m.timestamp ASC")
     List<MessageEntity> findMessagesByUsersId(@Param("currentUser") Long currentUser, @Param("recipient") Long recipient);
+
+    void deleteByTimestamp(Timestamp timestamp);
+
+    MessageEntity findByTimestamp(Timestamp timestamp);
 }

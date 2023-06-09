@@ -13,7 +13,6 @@ import java.sql.Timestamp;
 @Getter
 @ToString
 public class MessageEntity {
-    @ToString.Exclude
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

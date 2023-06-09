@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Setter
 @Getter
+@ToString
 public class MessageDTO {
     private Long senderId;
 

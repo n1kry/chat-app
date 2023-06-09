@@ -4,6 +4,7 @@ import com.iongroup.restraining.dao.UserDAO;
 import com.iongroup.restraining.entity.UserEntity;
 import com.iongroup.restraining.entity.dto.UserDTO;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class UserService {
     private final UserDAO userDao;
 
     private final BCryptPasswordEncoder passwordEncoder;
+    private final DaoAuthenticationProvider daoAuthenticationProvider;
 
     public void addUser(final UserEntity user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
